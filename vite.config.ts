@@ -12,13 +12,19 @@ export default defineConfig({
   plugins: [
     {
       name: 'dts-raw-embed',
-      resolveId(source) {
-        return source.endsWith('.d.ts?raw') ? source : null;
+      enforce: 'pre',
+      async resolveId(source, importer) {
+        if (source.endsWith('.d.ts?raw')) {
+          const withoutQuery = source.slice(0, -4);
+          const resolved = await this.resolve(withoutQuery, importer, { skipSelf: true });
+          if (resolved) return resolved.id + '?raw';
+        }
+        return null;
       },
       load(id) {
-        const [filepath, query] = id.split('?');
-        if (query === 'raw' && filepath.endsWith('.d.ts')) {
-          const content = readFileSync(filepath, 'utf-8');
+        if (id.endsWith('.d.ts?raw')) {
+          const fileId = id.slice(0, -4);
+          const content = readFileSync(fileId, 'utf-8');
           return `export default ${JSON.stringify(content)}`;
         }
         return null;
