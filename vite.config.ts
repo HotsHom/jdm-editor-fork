@@ -16,8 +16,10 @@ export default defineConfig({
       async resolveId(source, importer) {
         if (source.endsWith('.d.ts?dtsraw')) {
           const withoutQuery = source.slice(0, -7);
-          const resolved = await this.resolve(withoutQuery, importer, { skipSelf: true });
-          if (resolved) return resolved.id + '?dtsraw';
+          const resolvedPath = importer
+            ? path.resolve(path.dirname(importer), withoutQuery)
+            : path.resolve(process.cwd(), withoutQuery);
+          return resolvedPath + '?dtsraw';
         }
         return null;
       },
