@@ -7,13 +7,13 @@ import dayjs from 'dayjs/index.d.ts?raw';
 // @ts-ignore
 import defaultFn from './default-function.js?raw';
 // @ts-ignore
-import globalDts from './global.d.ts?raw';
+import globalDts from './global.d.ts';
 // @ts-ignore
-import http from './http.d.ts?raw';
+import http from './http.d.ts';
 // @ts-ignore
-import zen from './zen.d.ts?raw';
+import zen from './zen.d.ts';
 // @ts-ignore
-import zod from './zod.d.ts?raw';
+import zod from './zod.d.ts';
 
 export type FunctionLibrary = {
   name: string;

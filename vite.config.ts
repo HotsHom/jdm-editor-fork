@@ -1,3 +1,4 @@
+import { string } from 'vite-plugin-string';
 import react from '@vitejs/plugin-react-swc';
 import * as path from 'path';
 import { defineConfig } from 'vite';
@@ -7,8 +8,12 @@ import wasm from 'vite-plugin-wasm';
 import packageJson from './package.json';
 
 export default defineConfig({
-  assetsInclude: ['**/*.d.ts'],
-  plugins: [react(), wasm(), dts({ insertTypesEntry: true, rollupTypes: true })],
+  plugins: [
+    string({ include: '**/*.d.ts' }),
+    react(),
+    wasm(),
+    dts({ insertTypesEntry: true, rollupTypes: true }),
+  ],
   resolve: {
     extensions: ['.mjs', '.js', '.ts', '.d.ts', '.jsx', '.tsx', '.json'],
     dedupe: ['@lezer/common', '@lezer/lr', '@lezer/highlight'],
