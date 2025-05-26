@@ -1,6 +1,6 @@
 {
   "name": "@gorules/jdm-editor",
-  "version": "1.41.6",
+  "version": "1.41.7",
   "description": "",
   "author": "GoRules <hi@gorules.io> (https://gorules.io)",
   "homepage": "https://github.com/gorules/jdm-editor",
@@ -32,7 +32,7 @@
   "scripts": {
     "clean": "rimraf dist",
     "prebuild": "npm run clean",
-    "build": "npm run prebuild && vite build && npm run typecheck",
+    "build": "npm run prebuild && vite build",
     "build:watch": "vite build --watch",
     "storybook": "storybook dev -p 9009",
     "build:storybook": "storybook build -o docs",

@@ -7,6 +7,7 @@ import wasm from 'vite-plugin-wasm';
 import packageJson from './package.json';
 
 export default defineConfig({
+  assetsInclude: ['**/*.d.ts'],
   plugins: [
     react(),
     wasm(),
