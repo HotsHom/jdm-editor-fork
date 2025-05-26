@@ -1,0 +1,54 @@
+# Node modules
+node_modules/
+
+# Yarn Plug'n'Play
+.pnp/
+.pnp.js
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Dependency directories
+.eslintcache
+
+# Rollup cache
+.rpt2_cache/
+.rts2_cache_cjs/
+.rts2_cache_es/
+.rts2_cache_umd/
+
+# Build outputs
+dist/
+build/
+lib/
+esm/
+cjs/
+
+# Generated types
+*.d.ts
+*.d.ts.map
+
+# TypeScript build info
+*.tsbuildinfo
+
+# Coverage directories
+coverage/
+
+# Environment variables
+.env
+.env.*.local
+
+# IDE directories
+.vscode/
+.idea/
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Storybook build
+storybook-static/
