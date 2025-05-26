@@ -1,4 +1,3 @@
-import { string } from 'vite-plugin-string';
 import react from '@vitejs/plugin-react-swc';
 import * as path from 'path';
 import { defineConfig } from 'vite';
@@ -9,7 +8,6 @@ import packageJson from './package.json';
 
 export default defineConfig({
   plugins: [
-    string({ include: '**/*.d.ts' }),
     react(),
     wasm(),
     dts({ insertTypesEntry: true, rollupTypes: true }),
