@@ -10,6 +10,7 @@ export default defineConfig({
   assetsInclude: ['**/*.d.ts'],
   plugins: [react(), wasm(), dts({ insertTypesEntry: true, rollupTypes: true })],
   resolve: {
+    extensions: ['.mjs', '.js', '.ts', '.d.ts', '.jsx', '.tsx', '.json'],
     dedupe: ['@lezer/common', '@lezer/lr', '@lezer/highlight'],
   },
   build: {
