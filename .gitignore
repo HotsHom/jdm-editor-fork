@@ -28,10 +28,6 @@ lib/
 esm/
 cjs/
 
-# Generated types
-*.d.ts
-*.d.ts.map
-
 # TypeScript build info
 *.tsbuildinfo
 

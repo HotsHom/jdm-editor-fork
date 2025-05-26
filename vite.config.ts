@@ -3,43 +3,12 @@ import * as path from 'path';
 import { defineConfig } from 'vite';
 import dts from 'vite-plugin-dts';
 import wasm from 'vite-plugin-wasm';
-import { readFileSync } from 'fs';
 
 import packageJson from './package.json';
 
 export default defineConfig({
   assetsInclude: ['**/*.d.ts'],
-  plugins: [
-    {
-      name: 'dts-raw-embed',
-      enforce: 'pre',
-      async resolveId(source, importer) {
-        if (source.endsWith('.d.ts?raw')) {
-          const withoutQuery = source.slice(0, -7);
-          const resolvedPath = importer
-            ? path.resolve(path.dirname(importer), withoutQuery)
-            : path.resolve(process.cwd(), withoutQuery);
-          return resolvedPath + '?dtsraw';
-        }
-        return null;
-      },
-      load(id) {
-        if (id.endsWith('.d.ts?dtsraw')) {
-          const fileId = id.slice(0, -7);
-          try {
-            const content = readFileSync(fileId, 'utf-8');
-            return `export default ${JSON.stringify(content)}`;
-          } catch (err) {
-            return 'export default ""';
-          }
-        }
-        return null;
-      },
-    },
-    react(),
-    wasm(),
-    dts({ insertTypesEntry: true, rollupTypes: true }),
-  ],
+  plugins: [react(), wasm(), dts({ insertTypesEntry: true, rollupTypes: true })],
   resolve: {
     extensions: ['.mjs', '.js', '.ts', '.d.ts', '.jsx', '.tsx', '.json'],
     dedupe: ['@lezer/common', '@lezer/lr', '@lezer/highlight'],
