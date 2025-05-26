@@ -1,4 +1,4 @@
-import react from '@vitejs/plugin-react-swc';
+import react from '@vitejs/plugin-react';
 import * as path from 'path';
 import { defineConfig } from 'vite';
 import dts from 'vite-plugin-dts';
@@ -14,7 +14,7 @@ export default defineConfig({
       name: 'dts-raw-embed',
       enforce: 'pre',
       async resolveId(source, importer) {
-        if (source.endsWith('.d.ts?dtsraw')) {
+        if (source.endsWith('.d.ts?raw')) {
           const withoutQuery = source.slice(0, -7);
           const resolvedPath = importer
             ? path.resolve(path.dirname(importer), withoutQuery)
@@ -26,8 +26,12 @@ export default defineConfig({
       load(id) {
         if (id.endsWith('.d.ts?dtsraw')) {
           const fileId = id.slice(0, -7);
-          const content = readFileSync(fileId, 'utf-8');
-          return `export default ${JSON.stringify(content)}`;
+          try {
+            const content = readFileSync(fileId, 'utf-8');
+            return `export default ${JSON.stringify(content)}`;
+          } catch (err) {
+            return 'export default ""';
+          }
         }
         return null;
       },
