@@ -14,16 +14,16 @@ export default defineConfig({
       name: 'dts-raw-embed',
       enforce: 'pre',
       async resolveId(source, importer) {
-        if (source.endsWith('.d.ts?raw')) {
-          const withoutQuery = source.slice(0, -4);
+        if (source.endsWith('.d.ts?dtsraw')) {
+          const withoutQuery = source.slice(0, -7);
           const resolved = await this.resolve(withoutQuery, importer, { skipSelf: true });
-          if (resolved) return resolved.id + '?raw';
+          if (resolved) return resolved.id + '?dtsraw';
         }
         return null;
       },
       load(id) {
-        if (id.endsWith('.d.ts?raw')) {
-          const fileId = id.slice(0, -4);
+        if (id.endsWith('.d.ts?dtsraw')) {
+          const fileId = id.slice(0, -7);
           const content = readFileSync(fileId, 'utf-8');
           return `export default ${JSON.stringify(content)}`;
         }
