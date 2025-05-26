@@ -3,12 +3,27 @@ import * as path from 'path';
 import { defineConfig } from 'vite';
 import dts from 'vite-plugin-dts';
 import wasm from 'vite-plugin-wasm';
+import { readFileSync } from 'fs';
 
 import packageJson from './package.json';
 
 export default defineConfig({
   assetsInclude: ['**/*.d.ts'],
   plugins: [
+    {
+      name: 'dts-raw-embed',
+      resolveId(source) {
+        return source.endsWith('.d.ts?raw') ? source : null;
+      },
+      load(id) {
+        const [filepath, query] = id.split('?');
+        if (query === 'raw' && filepath.endsWith('.d.ts')) {
+          const content = readFileSync(filepath, 'utf-8');
+          return `export default ${JSON.stringify(content)}`;
+        }
+        return null;
+      },
+    },
     react(),
     wasm(),
     dts({ insertTypesEntry: true, rollupTypes: true }),
